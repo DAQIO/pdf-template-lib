@@ -47,7 +47,7 @@ export default class TemplateInterpreter {
   }
 
   _buildWidgetTree(type, node){
-    const klazz = NodeTypes[type];
+    const klazz = this._nodeTypes[type];
     if(!klazz){
       throw `Undefined type: ${type}`;
     }
