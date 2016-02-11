@@ -1,6 +1,5 @@
 // @if NODE_ENV='production'
 
-import TreeView from './TreeView';
 import TemplateInterpreter from './template/TemplateInterpreter'
 
 module.exports = {
