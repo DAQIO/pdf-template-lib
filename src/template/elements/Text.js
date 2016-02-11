@@ -22,7 +22,11 @@ export default class Text extends ReportElement {
       this._doc.rect(0, 0, this.width, this.height).fill();
     }
     this._doc.fillColor(this.fontColor);
-    this._doc.text(this.value, 0, 3.5, {
+    let x = 3;
+    if(this.align === 'center'){
+      x = 0;
+    }
+    this._doc.text(this.value, x, 3.5, {
       align: this.align,
       width: this.width,
       height: this.height
