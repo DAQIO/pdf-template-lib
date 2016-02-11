@@ -1,9 +1,11 @@
 // @if NODE_ENV='production'
 
 import TemplateInterpreter from './template/TemplateInterpreter'
+import ReportElement from './template/elements/ReportElement';
 
 module.exports = {
-  TemplateInterpreter
+  TemplateInterpreter,
+  ReportElement
 };
 // @endif
 

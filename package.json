@@ -1,6 +1,6 @@
 {
   "name" : "pdf-template-lib",
-  "version" : "0.0.2",
+  "version" : "0.0.3",
   "description" : "XML based template language for generating PDFs with pdfkit",
   "main" : "build/index.js",
   "scripts" : {
