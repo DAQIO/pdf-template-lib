@@ -9,12 +9,14 @@ gulp.task('dist', function(){
     gulp.src('src/**/*.js')
         .pipe(preprocess({context: { NODE_ENV: 'production', DEBUG: true}}))
         .pipe(babel({
-          stage: 0
+          stage: 0,
+          optional: ['runtime']
         })).pipe(gulp.dest('build')),
     gulp.src('src/**/*.html')
         .pipe(gulp.dest('build')),
     gulp.src('src/**/*.jsx').pipe(babel({
-      stage: 0
+      stage: 0,
+      optional: ['runtime']
     })).pipe(gulp.dest('build')),
     gulp.src('src/**/*.less').pipe(less({
       paths: [
