@@ -11,6 +11,7 @@ import Header from './elements/Header';
 import Rectangle from './elements/Rectangle';
 import Image from './elements/Image';
 import Style from './Style';
+import EventEmitter from 'wolfy87-eventemitter';
 const xml2js = Bluebird.promisifyAll(require('xml2js'));
 
 const DefaultNodeTypes = {
@@ -24,9 +25,10 @@ const DefaultNodeTypes = {
   'image' : Image
 };
 
-export default class TemplateInterpreter {
+export default class TemplateInterpreter extends EventEmitter {
 
   constructor(doc, context, {nodeTypes} = {}){
+    super();
     this._doc = doc;
     this.context = context;
     this._nodeTypes = _.clone(DefaultNodeTypes);
@@ -39,11 +41,13 @@ export default class TemplateInterpreter {
     const parserContext = _.extend({}, this.context);
     const xml = await xml2js.parseStringAsync(_.template(template)(parserContext));
 
+    this.emitEvent('template-interpreter-started', [{template, xml}]);
     this._pluckStyles(xml);
     this._pluckHeader(xml);
 
     const root = await this._buildWidgetTree('template', xml.template);
     await root.render();
+    this.emitEvent('template-interpreter-finished');
   }
 
   _buildWidgetTree(type, node){
@@ -55,7 +59,8 @@ export default class TemplateInterpreter {
       context: this.context,
       styles: this._styles,
       header: this._header,
-      footer: this._footer
+      footer: this._footer,
+      events: this
     });
     for(let {type, node:child} of this._getChildren(node)){
       root.addChild(this._buildWidgetTree(type, child));

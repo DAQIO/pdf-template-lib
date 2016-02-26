@@ -3,11 +3,12 @@ import _s from 'underscore.string';
 
 export default class ReportElement {
 
-  constructor(doc, node, {context, styles, ...options}){
+  constructor(doc, node, {context, styles, events, ...options}){
     this._doc = doc;
     this.context = context;
     this.children = [];
     this.styles = styles || [];
+    this.events = events;
     this.options = options;
     _.extend(this, this.defaults);
     if(node.$){

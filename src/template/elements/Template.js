@@ -10,12 +10,15 @@ export default class Template extends ReportElement {
       }
       index += 1;
     }
+    this.events.emitEvent('total-pages', [index]);
     await* _.map(this.children, (c) => c.preload());
 
     index = 0;
     for(let child of this.children){
+      this.events.emitEvent('started-page', [index]);
       this._doc.switchToPage(index);
       await child.render();
+      this.events.emitEvent('finished-page', [index]);
       index += 1;
     }
     this._doc.flushPages();
